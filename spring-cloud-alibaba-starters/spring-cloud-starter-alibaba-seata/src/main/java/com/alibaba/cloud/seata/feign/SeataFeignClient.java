@@ -16,20 +16,15 @@
 
 package com.alibaba.cloud.seata.feign;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import feign.Client;
 import feign.Request;
 import feign.Response;
 import io.seata.core.context.RootContext;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.util.StringUtils;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * @author xiaojing
@@ -74,8 +69,8 @@ public class SeataFeignClient implements Client {
 		seataXid.add(xid);
 		headers.put(RootContext.KEY_XID, seataXid);
 
-		return Request.create(request.method(), request.url(), headers, request.body(),
-				request.charset());
+		return Request.create(request.httpMethod(), request.url(), headers,
+				request.body(), request.charset(), request.requestTemplate());
 	}
 
 }
